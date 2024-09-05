@@ -1,0 +1,14 @@
+never { /* (! r44 U r33) && (! r44 U r28) && (! r45 U r33) && (! r45 U r28)  && ((! r33 U r28) && F r33) */
+T0_init :    /* init */
+	if
+	:: (!r33 && !r44 && !r45) -> goto T0_init
+	:: (!r44 && r28 && !r45) -> goto T0_S15
+	fi;
+T0_S15 :    /* 1 */
+	if
+	:: (!r44 && !r45) -> goto T0_S15
+	:: (r33) -> goto accept_all
+	fi;
+accept_all :    /* 2 */
+	skip
+}
