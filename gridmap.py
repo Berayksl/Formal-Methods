@@ -82,7 +82,6 @@ def draw_grid_map(cols, rows,current_state,obstacles,constraint_regions,path,tit
     
 
 
-#Part-1:
 def create_grid_graph(n, m,display):
     G = nx.grid_2d_graph(n, m, create_using=nx.DiGraph) #creates a 2d grid graph with dimensions n x m. each node is connected to the its neighbor nodes, meaning that it only allows up, down, left and right moves
 
@@ -114,7 +113,6 @@ def create_grid_graph(n, m,display):
 
 
 
-#Part-2:
 def environment_modifier(G,obstacles,constraint_location,environment_rows,display): #this function modifies the adjacency matrix of a given graph according to the obstacle regions and displays the new graph representation
     #the inputs to this function are lists of the state that are in a given region.
     
@@ -152,50 +150,5 @@ def environment_modifier(G,obstacles,constraint_location,environment_rows,displa
 
         plt.title('Modified Grid Graph')
         plt.show()
-
-#Part-3
-def find_shortest_path(G,start, end): 
-#this function finds the shortest path between two states in a given region, prints the output word
-
-    shortest_path = nx.shortest_path(G, source=start, target=end, method='dijkstra') #find the shortest path to the final state by using dijkstra's algorithm
-
-    #Print the output word 
-    output_word = ''
-    for state in shortest_path:
-        output_word += T_obs[state] + ','
-
-    return shortest_path, output_word[:-1]
-
-if __name__ == '__main__':
-
-    #environment region locations:
-    initial_state = (0,0)
-    final_state = (4,3)
-    obstacles = [(1,1),(3,2),(3,3)]
-    desired_regions = [(2,3), (4,2)]
-    chosen_desired_region = (2,3)
-
-    #grid size parameters:
-    n = 10
-    m = 8
-
-    G = create_grid_graph(n, m, display=True)
-    environment_modifier(G, obstacles,desired_regions,initial_state, m, display=True)
-
-    #Part-3, first question:
-    print('\nShortest path from the initial state to final state:')
-    shortest_path, output_word = find_shortest_path(G,start=initial_state,end=final_state)
-    print('Output Word:',output_word)
-    draw_grid_map(n,m,obstacles=obstacles,initial_state=initial_state,desired_regions=desired_regions,path=shortest_path)
-
-
-    #Part-3, second question
-    path_to_final,word1 = find_shortest_path(G,start=initial_state,end=final_state)
-    path_to_desired,word2 = find_shortest_path(G,start=final_state,end=chosen_desired_region)
-    print('\nShortest path from the initial state to the final state and then visits the chosen desired region:')
-    output_word = word1[:-2] + word2
-    print('Output Word:',output_word)
-    shortest_path = path_to_final + path_to_desired
-    draw_grid_map(n,m,obstacles=obstacles,initial_state=initial_state,desired_regions=desired_regions,path=shortest_path)
 
     
